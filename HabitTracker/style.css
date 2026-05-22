@@ -111,3 +111,72 @@ input {
 .delete-btn:hover {
     transform: scale(1.2);
 }
+
+.header-brand {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.header-actions {
+    display: flex;
+    gap: 10px;
+}
+
+/* Buttons */
+.btn-primary {
+    padding: 6px 12px;
+    background-color: var(--accent);
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    transition: opacity 0.2s;
+}
+
+.btn-secondary {
+    padding: 4px 8px;
+    background-color: var(--surface-color);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.btn-primary:hover, .btn-secondary:hover {
+    opacity: 0.9;
+}
+
+.btn-today {
+    margin-left: 10px;
+}
+
+/* Week Navigation */
+.week-nav-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.week-title {
+    margin: 0;
+}
+
+/* Table Specifics */
+.date-small {
+    font-weight: normal;
+    opacity: 0.7;
+}
+
+.is-today-text {
+    color: var(--accent);
+}
+
+.is-today-bg {
+    background-color: rgba(59, 130, 246, 0.1);
+}
+
+.streak-count {
+    color: var(--accent);
+    font-weight: bold;
+}
