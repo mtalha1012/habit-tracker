@@ -37,6 +37,36 @@ body {
     align-items: center;
 }
 
+.header-brand, .header-actions, .week-nav-container {
+    display: flex;
+    align-items: center;
+}
+
+.header-brand {
+    gap: 15px;
+}
+
+.header-actions, .week-nav-container {
+    gap: 10px;
+}
+
+.week-nav-container {
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+}
+
+.week-title {
+    margin: 0;
+}
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
 .habit-table {
     width: 100%;
     border-collapse: collapse;
@@ -47,80 +77,47 @@ body {
     border: 1px solid var(--border-color);
     padding: 12px;
     text-align: center;
+    white-space: nowrap;
+    min-width: 50px;
 }
 
 .habit-table th {
     background-color: var(--surface-color);
-    color: var(--text-main);
 }
 
-.habit-table td:first-child, .habit-table th:first-child {
+.habit-table th:first-child, .habit-table td:first-child {
     text-align: left;
+    min-width: 150px;
+    position: sticky;
+    left: 0;
+    background-color: var(--surface-color);
+    z-index: 1;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.05);
 }
 
 button {
     cursor: pointer;
+    transition: all 0.2s ease;
 }
 
-.check-btn {
-    background: none;
-    border: none;
-    font-size: 18px;
+input, .theme-toggle, .btn-secondary {
+    background-color: var(--surface-color);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
 }
 
 input {
     padding: 6px;
-    background-color: var(--surface-color);
-    color: var(--text-main);
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
 }
 
 .theme-toggle {
-    background-color: var(--surface-color);
-    color: var(--text-main);
-    border: 1px solid var(--border-color);
     padding: 6px 12px;
-    border-radius: 4px;
     font-size: 14px;
 }
 
-.empty-state {
-    text-align: center;
-    padding: 60px 20px;
-}
-
-.empty-title {
-    color: var(--text-main);
-    margin-bottom: 8px;
-}
-
-.empty-sub {
-    color: var(--text-muted);
-}
-
-.delete-btn {
-    color: #f87171;
-    border: none;
-    background: none;
-    font-size: 16px;
-    cursor: pointer;
-    transition: transform 0.1s;
-}
-
-.delete-btn:hover {
-    transform: scale(1.2);
-}
-
-.header-brand {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.header-actions {
-    display: flex;
-    gap: 10px;
+.btn-secondary {
+    padding: 4px 8px;
 }
 
 .btn-primary {
@@ -129,35 +126,75 @@ input {
     color: #ffffff;
     border: none;
     border-radius: 4px;
-    transition: opacity 0.2s;
-}
-
-.btn-secondary {
-    padding: 4px 8px;
-    background-color: var(--surface-color);
-    color: var(--text-main);
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    transition: background-color 0.2s;
-}
-
-.btn-primary:hover, .btn-secondary:hover {
-    opacity: 0.9;
 }
 
 .btn-today {
     margin-left: 10px;
 }
 
-.week-nav-container {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    margin-bottom: 10px;
+.theme-toggle:hover, .btn-secondary:hover {
+    background-color: var(--border-color);
+    transform: translateY(-1px);
 }
 
-.week-title {
-    margin: 0;
+.theme-toggle:active, .btn-secondary:active {
+    transform: translateY(0);
+}
+
+.btn-primary:hover {
+    filter: brightness(1.15);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+.check-btn, .delete-btn {
+    background: none;
+    border: none;
+}
+
+.check-btn {
+    font-size: 18px;
+    transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0.8;
+}
+
+.check-btn:hover {
+    transform: scale(1.2);
+    opacity: 1;
+}
+
+.check-btn:active {
+    transform: scale(0.8);
+}
+
+.delete-btn {
+    color: #f87171;
+    font-size: 16px;
+    opacity: 0.5;
+}
+
+.delete-btn:hover {
+    transform: scale(1.2) rotate(90deg);
+    opacity: 1;
+    color: #ef4444;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.empty-title {
+    margin-bottom: 8px;
+}
+
+.empty-sub {
+    color: var(--text-muted);
 }
 
 .date-small {
@@ -165,15 +202,14 @@ input {
     opacity: 0.7;
 }
 
-.is-today-text {
+.is-today-text, .streak-count {
     color: var(--accent);
+}
+
+.streak-count {
+    font-weight: bold;
 }
 
 .is-today-bg {
     background-color: rgba(59, 130, 246, 0.1);
-}
-
-.streak-count {
-    color: var(--accent);
-    font-weight: bold;
 }
