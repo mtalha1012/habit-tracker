@@ -98,13 +98,13 @@ function calculateStreak(completedDates) {
         }
     }
     return streak;
-};
+}
 
 function renderGrid() {
     let navHtml = `
         <div class="week-nav-container">
             <button class="btn-secondary" onclick="changeWeek(-1)">← Prev</button>
-            <h3 class="week-title">Week of ${formatDate(currentWeekStart)}</h3>
+            <h3 class="week-title" aria-live="polite">Week of ${formatDate(currentWeekStart)}</h3>
             <button class="btn-secondary" onclick="changeWeek(1)">Next →</button>
             <button class="btn-secondary btn-today" onclick="resetWeek()">Today</button>
         </div>
@@ -130,7 +130,7 @@ function renderGrid() {
 
     let todayStr = formatDate(new Date());
 
-    let html = '<table class="habit-table">';
+    let html = '<div class="table-wrapper"><table class="habit-table">';
     html += '<thead><tr><th>Habit Name</th>';
     
     let dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -155,7 +155,7 @@ function renderGrid() {
 
             html += `
                 <td class="${bgClass}">
-                    <button class="check-btn" onclick="toggleHabit(${i}, '${dateStr}')">
+                    <button class="check-btn" onclick="toggleHabit(${i}, '${dateStr}')" aria-pressed="${isDone}">
                         ${icon}
                     </button>
                 </td>`;
@@ -164,11 +164,11 @@ function renderGrid() {
         let streakCount = calculateStreak(habits[i].completedDates);
         html += `<td><span class="streak-count">🔥 ${streakCount}</span></td>`;
 
-        html += `<td><button class="delete-btn" onclick="deleteHabit(${i})">✖</button></td>`;
+        html += `<td><button class="delete-btn" onclick="deleteHabit(${i})" aria-label="Delete habit">✖</button></td>`;
         html += '</tr>';
     }
 
-    html += '</tbody></table>';
+    html += '</tbody></table></div>';
     container.innerHTML = html;
 }
 
