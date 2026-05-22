@@ -1,6 +1,8 @@
+/* --- Global State --- */
 let habits = [];
 let currentWeekStart = getStartOfWeek(new Date());
 
+/* --- Initialization --- */
 function initApp() {
     let savedTheme = localStorage.getItem('theme') || 'dark';
     document.documentElement.setAttribute('data-theme', savedTheme);
@@ -28,9 +30,16 @@ function initApp() {
     renderGrid();
 }
 
+/* --- Date Utilities --- */
 function getStartOfWeek(date) {
     let d = new Date(date);
     let day = d.getDay();
+    
+    /*
+     * Adjust the date to ensure the week always starts on Monday.
+     * JavaScript's getDay() treats Sunday as 0. If it is Sunday (0), we subtract 6 days.
+     * For all other days, we subtract the current day number and add 1 to snap back to Monday.
+     */
     let diff = d.getDate() - day + (day === 0 ? -6 : 1);
     d.setDate(diff);
     return d;
@@ -46,6 +55,7 @@ function addDays(date, days) {
     return d;
 }
 
+/* --- Week Navigation --- */
 function changeWeek(offset) {
     currentWeekStart = addDays(currentWeekStart, offset * 7);
     renderGrid();
@@ -56,6 +66,7 @@ function resetWeek() {
     renderGrid();
 }
 
+/* --- Data Management --- */
 function loadData() {
     let saved = localStorage.getItem('habit-tracker-data');
     if(saved) {
@@ -72,6 +83,7 @@ function saveData() {
     localStorage.setItem('habit-tracker-data', JSON.stringify(habits));
 }
 
+/* --- Core Logic & Calculations --- */
 function calculateStreak(completedDates) {
     let streak = 0;
     let today = new Date();
@@ -82,12 +94,21 @@ function calculateStreak(completedDates) {
 
     let checkDate = today;
 
+    /*
+     * Streak Grace Period Logic:
+     * If today is unchecked, but yesterday is checked, we shift the verification date to yesterday.
+     * This holds the streak open so the user is not punished with a '0' before they complete today's task.
+     * If both today and yesterday are completely missed, the streak is definitively broken.
+     */
     if (!completedDates.includes(todayStr) && completedDates.includes(yesterdayStr)) {
         checkDate = yesterday;
     } else if (!completedDates.includes(todayStr) && !completedDates.includes(yesterdayStr)) {
         return 0; 
     }
 
+    /*
+     * Traverses backwards in time day-by-day, counting upward until an unchecked date breaks the loop.
+     */
     while (true) {
         let dateStr = formatDate(checkDate);
         if (completedDates.includes(dateStr)) {
@@ -100,6 +121,7 @@ function calculateStreak(completedDates) {
     return streak;
 }
 
+/* --- UI Rendering --- */
 function renderGrid() {
     let navHtml = `
         <div class="week-nav-container">
@@ -172,6 +194,7 @@ function renderGrid() {
     container.innerHTML = html;
 }
 
+/* --- User Actions --- */
 function addHabit() {
     let inputField = document.getElementById('habit-input');
     let newName = inputField.value.trim();
