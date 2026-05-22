@@ -45,14 +45,3 @@ No npm install needed. No build step. No config. Just open and use.
 Vanilla HTML5 · CSS3 (custom properties, `@keyframes`) · ES2020 JavaScript
 
 No frameworks. No build tools. No dependencies.
-
-## File structure
-
-```
-Habit Tracker/
-├── index.html       ← app shell; all dynamic content rendered by app.js
-├── style.css        ← full design system: tokens, reset, layout, components
-├── app.js           ← all state, logic, and DOM rendering
-├── README.md
-├── ANSWERS.md       ← 5 submission questions
-```
