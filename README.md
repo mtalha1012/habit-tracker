@@ -4,15 +4,11 @@ A single-page habit tracker built with vanilla HTML, CSS, and JavaScript — no 
 
 ## How to run
 
-**Option 3 - Open live link**
-
-
-
-**Option 2 — Open directly in a browser**
+**Option 1 — Open directly in a browser**
 
 Double-click `index.html`, or drag it into any modern browser (Chrome, Firefox, Edge, Safari).
 
-**Option 3 — Serve locally (recommended, avoids any browser file:// restrictions)**
+**Option 2 — Serve locally (recommended, avoids any browser file:// restrictions)**
 
 If you have Python installed:
 ```bash
