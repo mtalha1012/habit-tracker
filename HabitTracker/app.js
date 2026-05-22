@@ -5,11 +5,15 @@ let habits = [
 let daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
 function initApp() {
+    loadData();
+
     document.getElementById('header').innerHTML = `
-        <h2>Habit Tracker</h2>
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <h2>Habit Tracker</h2>
+            <button class="theme-toggle" onclick="toggleTheme()">Theme</button>
         <div>
             <input type="text" id="habit-input" placeholder="Add new habit...">
-            <button onclick="addHabit()">Add</button>
+            <button class="button" onclick="addHabit()">Add</button>
         </div>
         `;
     document.getElementById('week-nav').innerHTML = `
@@ -18,15 +22,41 @@ function initApp() {
     renderGrid();
 }
 
+function loadData() {
+    let saved = localStorage.getItem('habit-tracker-data');
+    if(saved) {
+        habits = JSON.parse(saved);
+    } else {
+        habits = [];
+    }
+}
+
+function saveData() {
+    localStorage.setItem('habit-tracker-data', JSON.stringify(habits));
+}
+
 function renderGrid() {
     let container = document.getElementById('grid-container');
 
-    let html = '<table class="habit-table"';
+    if (habits.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <h3 class="empty-title">No habits yet</h3>
+                <p class="empty-sub">Add a habit above to start building your routine.</p>
+            </div>
+        `;
+        return;
+    }
+
+    let html = '<table class="habit-table>"';
 
     html += '<tr><th>Habit Name</th>';
     for (let i = 0; i < daysOfWeek.length; i++) {
-        html += `<tr>${daysOfWeek[i]}</th>`;
+        html += `<th>${daysOfWeek[i]}</th>`;
     }
+    html += '</tr>';
+
+    html += '<th>Action</th>';
     html += '</tr>';
 
     for(let i = 0; i < habits.length; i++) {
@@ -44,6 +74,12 @@ function renderGrid() {
                     </button>
                 </td>`
         }
+
+        html += `<td>
+                    <button class="delete-btn" onclick="deleteHabit(${i})">
+                        X
+                    </button>
+                </td>`;
         html += '</tr>';
     }
 
@@ -61,6 +97,7 @@ function addHabit() {
             days: [false, false, false, false, false, false, false]
         });
         inputField.value = "";
+        saveData();
         renderGrid();
     }
 }
@@ -70,4 +107,17 @@ function toggleHabit(habitIndex, dayIndex) {
     renderGrid();
 }
 
+function deleteHabit(habitIndex) {
+    habits.splice(habitindex, 1);
+    saveData();
+    renderGrid();
+}
+
+function toggleTheme() {
+    let currentTheme = document.getAttribute('data-theme');
+    let newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+}
 initApp();
